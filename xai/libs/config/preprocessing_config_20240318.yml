@@ -1,0 +1,14 @@
+ds_type: 'cml'
+timestep_before: 120
+timestep_after: 60
+batch_size: 64
+shuffle_size: 7000
+random_state : 1337
+
+dataset:
+    raw_dataset_path: nan
+    create_nc_files: False
+    create_tfrecords_dataset: False
+    tfrecords_dataset_dir: '../../../data_proc/CML/tfrecords'
+    train_fraction : 0
+    val_fraction : 0

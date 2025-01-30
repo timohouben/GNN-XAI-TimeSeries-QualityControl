@@ -1,0 +1,4 @@
+model_path: '../../../models/model_GCN/'
+optimizer: 'adam'
+plotting:
+    alpha: 0.2

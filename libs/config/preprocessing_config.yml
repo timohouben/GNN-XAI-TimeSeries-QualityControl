@@ -1,0 +1,24 @@
+ds_type: 'cml'
+random_state: 44
+timestep_before: 120
+timestep_after: 60
+batch_size: 128
+shuffle_size: 7000
+min_date: '2019-01-01T00:00'
+max_date: '2019-12-31T23:59'  
+interpolate: True
+raw_dataset_path: '../example_data/cml_raw_example.nc'
+create_nc_files: False
+ncfiles_dir: '../example_data/cml/nc_files'
+create_tfrecords_dataset: False
+tfrecords_dataset_dir: '../example_data/cml/tfrecords'
+train_fraction: 0.6
+val_fraction: 0.2
+window_length: 4320
+
+graph:
+    max_neighbour_depth: 0.1
+    max_sample_distance: 20
+    max_neighbour_distance: 10    
+    
+

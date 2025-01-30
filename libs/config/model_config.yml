@@ -1,0 +1,69 @@
+train: False
+train_baseline: False
+epochs: 10
+model_path: '../model_cml'
+optimizer: 'adam'
+es_patience: 10
+learning_rate: 0.0001
+calculate_threshold: True
+
+learning_learn_scheduler:
+    use: True
+    after_epochs: 5
+    rate: 0.95
+
+plotting:
+    plot_time_range: 144
+    alpha: 0.2
+    outdir: '../plots'
+    validation_samples: True
+
+sequence_layer:
+    algorithm: 'lstm'
+    kernel_size: null
+    filter_1_size: 16
+    n_stacks: 2
+    pool_size: 3
+    alpha: 0.3
+    activation: 'tanh'
+    regularizer: null
+    dropout: null
+
+graph_convolution:
+    layer: 'GeneralConv'
+    activation: 'prelu'
+    units: 16
+    attention_heads: null
+    aggregation_type: 'mean'
+    regularizer: null
+    dropout_rate: 0
+    mlp_hidden: null
+    n_layers: null
+    
+dense:
+    alpha: 0.3
+    layers_numb: 1
+    units: 64
+    activation: null
+    regularizer: null
+    
+pooling:
+    aggregation_type: 'mean'
+
+weight_classes: 
+    use: True
+    calculate: False
+    class_0: 1
+    class_1: 5
+    
+baseline_model:
+    type: 'lstm'
+    model_path: '../model_cml_baseline'
+    n_stacks: 2
+    filter_1_size: 16
+    pool_size: 3
+    kernel_size: null
+    alpha: 0.3
+    dense_layer_units: 64
+    activation: 'tanh'
+    regularizer: null

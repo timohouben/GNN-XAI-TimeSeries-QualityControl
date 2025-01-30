@@ -1,0 +1,62 @@
+image: condaforge/mambaforge:latest
+
+# variables:
+#   GIT_SUBMODULE_STRATEGY: none
+
+stages:
+  #- linting
+  - test
+  #- deploy
+
+# .linting:
+#   stage: linting
+#   script:
+#     - mamba install isort black flake8 pylint
+#     - isort . --check-only
+#     - black --check --diff .
+#     - flake8 .
+    # no pylint (for now), since we are not doing good here...
+    #- find . -type f -name "*.py" | xargs pylint
+
+unit tests:
+  tags:
+    - cuda 
+    - intel
+  stage: test
+  script:
+    #- git submodule update --init --recursive
+    - mamba env create -f environment.yml
+    - source activate resead
+    - mamba install -c nvidia cuda-nvcc=12.2 cudatoolkit=11.8
+    # my (Timo) second API-Key, should be changed to a service account key
+    # but this option is not available for free accounts on WandB, KEEP REPO PRIVATE!
+    - wandb login 3655e7311724abb2faf82df61039da7aaf87359e
+    #- XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/local/cuda-11.8 coverage run -m unittest discover tests/
+    #- find / -type d -name nvvm
+    # XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
+    #- XLA_FLAGS=--xla_gpu_cuda_data_dir=/opt/conda/envs/resead/ coverage run -m unittest discover tests/
+    - mkdir -p /opt/conda/envs/resead/lib/nvvm/libdevice/
+    - cp /opt/conda/envs/resead/lib/libdevice.10.bc /opt/conda/envs/resead/lib/nvvm/libdevice/libdevice.10.bc
+    - XLA_FLAGS=--xla_gpu_cuda_data_dir=/opt/conda/envs/resead/lib/ coverage run -m unittest discover tests/
+    - coverage report -i  # -i: ignore 'No source for code: ...' error
+    - coverage html -i
+    - coverage xml -i
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+      paths: 
+        - htmlcov/
+      # coverage_report:
+      #   coverage_format: cobertura
+      #   path: coverage.xml
+
+# pages:
+#   stage: deploy
+#   dependencies:
+#     - test
+#   script:
+#     - mkdir .public
+#     - cp -r htmlcov/* .public
+#     - mv .public public
+#   artifacts:
+#     paths:
+#       - public/

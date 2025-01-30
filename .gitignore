@@ -1,0 +1,15 @@
+.ipynb_checkpoints
+data
+wandb
+models
+model
+plots
+__pycache__
+nc_files
+*.tfrec
+*.nc
+!cml_raw_example.nc # exception
+!soilnet_raw_example.nc # exception
+
+# OS
+*.DS_Store

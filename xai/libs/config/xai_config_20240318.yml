@@ -1,0 +1,61 @@
+output_dir : ../../../xplain/
+project: 20240318-ig
+
+# configure the gradients computation and if sample based plots should be plotted
+# -------------------------------------------------------------------------------
+integrated_gradients:
+    random_seed: 42                                     # random seed for reproducibility, only used for data preparation
+    load_gradients_from_sample_file : False             # whether to load the gradients from file stored for every sample, if true gradients computation will be skipped
+    evaluate_model : False                              # whether to evaluate the model on the test dataset and print results
+    dataset : test                                      # use test train or val data, if all tfrecords are in one directory use test and all files will be processed
+    batch_ids : all                                     # which batch to process, either list of int or 'all'
+    m_steps : 100                                       # interpolation steps
+    scale_gradients : True                              # whether to scale the gradients by the input data, default is True
+    which_samples : ['TN', 'TP', 'FP', 'FN']            # which samples to unwrap and save 
+    #which_samples : ['TP']            # which samples to unwrap and save 
+    baseline : zero                                     # how to calculate the beaseline from the input data, only zero is implemented
+    threshold : 0.956                                   # threshold for the anomaly score, lower = no anomaly, higher = anomaly
+    negative_values : keep                              # whether to allow negative values in the integrated gradients: either 'clip' or 'abs' or 'keep', default is 'keep'
+    # sample based plots
+    plot_interpolated_data_element_series : False       # whether to plot some steps of the interpolated input data
+    plot_classified_timeseries_sample: False            # whether to plot the classified timeseries of the sample
+    plot_gradient_saturation: False                     # whether to plot the gradient saturation
+    plot_heatmap: False                                 # whether to plot the heatmap, heatmaps can be plotted later as well
+    # configure the plots
+    # -------------------
+    plot:                                           
+        gradient_saturation:
+            normalize : False                           # whether to normalize the gradients to the range [0,1]
+        heatmap:
+            annotate_batch_id : True                    # whether to annotate the batch id
+            scale_feature_gradients : 25                # scale the gradients of the features (neighbors) by a factor for visualization
+            cbar_norm : linear                          # linear or log colorbar, degault is linear
+            #cbar_limits: [-1,1]       
+            cbar_limits: [-0.15, 0.15]                  # use 'auto' for automatic limits or list of two floats for manual limits
+            #ylims : [-5, 30]
+            ylims : 'auto'                              # y limits of the axis, use 'auto' for automatic limits or list of two floats for manual limits, maximum is 15
+            dpi: 100                                    # resolution of the heatmap plot
+    # configure the analysis
+    # ----------------------
+    analyser:
+        concat_images_scale : 0.8                       # resolution scale factor for the concatenated images
+        overwrite_concat_images : True                  # whether to overwrite existing concatenated plot files, if False the file will be skipped
+        which_samples : ['TP', 'FP', 'TN', 'FN']                          # which samples to process based on the confusion matrix, will impact the videos
+        keep_surrounding : 50                            # how many surrounding samples to keep/process around the sample of interest defined by which_samples
+        which_sensors: ['BY4168_2_BY4036_4', 'DO1695_2_DO6017_2']            # which sensors to process, either list of str or 'all'
+        video:    
+            video_fps : 20                                  # fps for the video, 20 is a good value for almost smooth but not too fast movement of time series
+            videos_from_concat_images : False               # whether to create videos from concatenated images or from heatmaps only, depends on if you concatenated the heatmaps with the plot_classified_timeseries_sample plot
+        spatial_aggregation:
+            which_samples : ['TP']    # which samples to process based on the confusion matrix, no surrounding samples will be processed
+            normalize : True                            # whether to normalize the gradients to the range [0,1]
+            scale_feature_gradients : 10                # how to scale the gradients of the neighbors
+        aggregate_sample_along_time:
+            interval : 60                              # provide the time inverval in seconds
+            cbar_limits: [-0.15, 0.15]                   # use 'auto' for automatic limits or list of two floats for manual limits, will be overwritten by function arguments
+            figsize : [24,16]
+            ylims : [-2,10]                              # y limits of the axis, use 'auto' for automatic limits or list of two floats for manual limits
+            agg_type: mean                              # how to aggregate the gradients, either 'mean', 'max', 'min' or 'sum', will be overwritten by function arguments
+            norm_by_prediction: False                    # whether to normalize the gradients by the prediction, will be overwritten by function arguments
+            scale_feature_gradients : 25                # how to scale the gradients of the neighbors
+            group_tl_channels : True                    # whether to group the tl1 and tl2 channels of the cml sensors

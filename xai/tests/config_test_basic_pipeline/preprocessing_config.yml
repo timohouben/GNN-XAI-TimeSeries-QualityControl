@@ -1,0 +1,26 @@
+ds_type: 'cml'
+random_state: 44
+timestep_before: 60
+timestep_after: 60
+batch_size: 64
+shuffle_size: 512
+
+dataset:
+    interpolate: True
+    normalize: True
+    normalization_method: 'standarization'
+    raw_dataset_path: 'example_data/cml_raw_example.nc'
+    create_nc_files: True
+    ncfiles_dir: 'example_data/nc_files'
+    create_tfrecords_dataset: True
+    tfrecords_dataset_dir: 'example_data/tfrecords_new'
+    train_fraction: 0.6
+    val_fraction: 0.2
+    window_length: 60
+    
+graph:
+    max_depth: 0.1
+    max_neighbour_depth: 0.1
+    max_sample_distance: 20
+    max_neighbour_distance: 20    
+
