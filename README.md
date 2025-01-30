@@ -13,7 +13,7 @@ Environmental sensor networks play a crucial role in monitoring key parameters e
 
 Corresponding author: Christian Chwala, christian.chwala@kit.edu
 
-doi: https://doi.org/10.1175/AIES-D-24-0032.1
+doi: [https://doi.org/10.1175/AIES-D-24-0032.1](https://doi.org/10.1175/AIES-D-24-0032.1)
 
 ## If you use this code, please cite the paper as follows:
 
@@ -33,9 +33,6 @@ doi: https://doi.org/10.1175/AIES-D-24-0032.1
 }
 ```
 
---- 
----
----
 ---
 # Interpretable Quality Control of Environmental Sensor Networks Using Graph Neural Networks
 
