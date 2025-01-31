@@ -52,7 +52,7 @@ The code is compatible with two datasets:
 - **CML (Commercial Microwave Links):** This dataset consists of measurements from microwave communication links, often used for rainfall estimation.  
 - **SoilNet:** A network of soil moisture sensors with varying depths, designed to monitor soil conditions over time.  
 
-Sample datasets for both are included in the `./sample_data` folder to help you get started.
+Sample datasets for both are included in the `./example_data` folder to help you get started.
 
 ---
 
