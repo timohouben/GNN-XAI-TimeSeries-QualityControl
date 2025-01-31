@@ -157,13 +157,17 @@ Feel free to explore the repository and experiment with different configurations
 The code for the integrated gradient analysis is available in the `./xai` folder. 
 
 The script 
-- `../libs/integrated_gradients.py` calculates the gradients, visualizes intermediate steps, and generates an attribution map for each sample. 
+- `./xai/libs/integrated_gradients.py` calculates the gradients, visualizes intermediate steps, and generates an attribution map for each sample. 
  
 The script 
-- `../libs/integrated_gradients_analyser.py` processes the results and generates visualizations for selected samples from a selected time period. 
+- `./xai/libs/integrated_gradients_analyser.py` processes the results and generates visualizations for selected samples from a selected time period. 
 
 The config
-- `../libs/config/xai_config_20240318.yml` configures the XAI workflow.
+- `./xai/libs/config/xai_config_20240318.yml` configures the XAI workflow.
+
+The following scripts were used to produce the XAI results in the paper:
+- `./xai/notebooks/run_integrated_gradients_20240318.py`
+- `./xai/notebooks/run_integrated_gradients_analyser_20240318.py`
 
 The XAI part was developed at an earlier stage of the project and is not fully integrated into the final code. However, the scripts and files integrated in the `./xai` folder can be used to reproduce the XAI analysis presented in the paper with the status of the GNN model running at that time.
 
@@ -173,3 +177,5 @@ The XAI analysis was subdivided into two parts
 - **b) - Aggregated feature attribution (see image below).**
 
 ![alt text](image-1.png)
+
+
